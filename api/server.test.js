@@ -61,7 +61,7 @@ describe("GET /games", () => {
 
         await request(server)
             .post("/games")
-            .send([{ "genre": "shooter", "releaseYear": 1999, "title": "Invaders" }, { "genre": "games no one wants to play", "title": "The greates game" }, { "genre": "shooter", "releaseYear": 1999, "title": "Invaders" }]);
+            .send([{ "genre": "games no one wants to play", "title": "The greates game" }, { "genre": "shooter", "releaseYear": 1999, "title": "Invaders" }]);
 
         response = await request(server).get("/games");
 
@@ -73,6 +73,16 @@ describe("GET /games", () => {
         response.body = [];
         expect(Array.isArray(response.body)).toBe(true);
         expect(response.body).toEqual([]);
+    });
+
+    it("return 200 status code if all is working correctly", async () => {
+        await request(server)
+            .post("/games")
+            .send([{ "genre": "games no one wants to play", "title": "The greates game" }, { "genre": "shooter", "releaseYear": 1999, "title": "Invaders" }]);
+
+        const response = await request(server).get("/games");
+
+        expect(response.status).toBe(200);
     });
 
 });
