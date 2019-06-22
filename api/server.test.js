@@ -1,9 +1,7 @@
 const request = require("supertest");
 const server = require("./server.js");
 
-// beforeEach(async () => {
-//     const temp = await request(server).delete("/games");
-// });
+
 
 describe("Sanity Check - server up", () => {
     test("should server Up ", async () => {
@@ -68,6 +66,13 @@ describe("GET /games", () => {
         response = await request(server).get("/games");
 
         expect(response.body).toEqual([{ "genre": "shooter", "releaseYear": 1999, "title": "Invaders" }, { "genre": "games no one wants to play", "title": "The greates game" }]);
+    });
+
+    it("return an empty array of games", async () => {
+        let response = await request(server).get("/games");
+        response.body = [];
+        expect(Array.isArray(response.body)).toBe(true);
+        expect(response.body).toEqual([]);
     });
 
 });
