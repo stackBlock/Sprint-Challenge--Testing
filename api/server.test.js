@@ -28,4 +28,10 @@ describe("/games - POST", () => {
             releaseYear: 1999
         });
     });
+
+    it('check for JSON', async () => {
+        let response = await request(server).post('/games');
+
+        expect(response.type).toBe('application/json');
+    });
 })
